@@ -1,28 +1,34 @@
-let free = false;
+let cantidad = prompt(`¿Cuántos alumnos son?`);
+let alumnosTotales = [];
 
-const validarCliente = (time) => {
-  let edad = prompt(`¿Cuál es tu edad?`);
-  if (edad >= 18) {
-    if (time >= 2 && time < 7 && free == false) {
-      alert(
-        `Podés pasar gratis porque sos la primera persona después de las 2AM`
-      );
-      free = true;
-    } else {
-      alert(
-        `Son las ${time}:00HS y podés pasar, pero tenés que pagar la entrada`
-      );
-    }
-  } else {
-    alert(`Mirá papu, sos menor de edad, por ende no vas a pasar MAQUINOLA`);
+for (let i = 0; i < cantidad; i++) {
+  alumnosTotales[i] = [prompt(`nombre del alumno ` + (i + 1)), 0];
+}
+
+const tomarAsistencia = (nombre, p) => {
+  let presencia = prompt(nombre);
+  if (presencia == "p" || presencia == "P") {
+    alumnosTotales[p][1]++;
   }
 };
 
-validarCliente(23);
-validarCliente(24);
-validarCliente(0.2);
-validarCliente(0.6);
-validarCliente(1);
-validarCliente(2);
-validarCliente(2.4);
-validarCliente(3);
+for (let i = 0; i < 30; i++) {
+  for (alumno in alumnosTotales) {
+    tomarAsistencia(alumnosTotales[alumno][0], alumno);
+  }
+}
+
+for (alumno in alumnosTotales) {
+  let resultado = `${alumnosTotales[alumno][0]}: <br>
+                  Presentes: <b>${alumnosTotales[alumno][1]}</b> <br>
+                  Ausencias: <b>${
+                    30 - parseInt(alumnosTotales[alumno][1])
+                  }</b>`;
+  if (30 - alumnosTotales[alumno][1] > 18) {
+    resultado +=
+      "<b style='color:red'> REPROBADO POR INASISTENCIAS</b> <br><br>";
+  } else {
+    resultado += "<br><br>";
+  }
+  document.write(resultado);
+}
